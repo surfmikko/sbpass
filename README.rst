@@ -2,7 +2,7 @@ Sparse Bundle Password Brute Force
 ==================================
 
 These tools were created to recover password for OSX sparsebundle image, that I
-just forgot. Implementation is not really fast or effective 6 pass/seconds with
+just forgot. Implementation is rather naive and slow, about 6 pass/seconds with
 Intel Core i5 1.8GHz / SSD disk. Mostly this will be effective only when there
 is good clue about the password, that is your own passwords.
 
