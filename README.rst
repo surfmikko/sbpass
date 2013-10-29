@@ -1,5 +1,5 @@
-Sparse Bundle Password Brute Force
-==================================
+Sparse Bundle Password Recovery
+===============================
 
 These tools were created to recover password for OSX sparsebundle image, that I
 just forgot. Implementation is rather naive and slow, about 6 pass/seconds with
