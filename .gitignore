@@ -1,2 +1,5 @@
 wordlist.*
 base.*
+*.swp
+*.swo
+*.pyc

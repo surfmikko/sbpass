@@ -39,7 +39,7 @@ def main():
     f.close()
 
     # Number of parts per password
-    for number in range(1, MAX_PARTS):
+    for number in range(1, MAX_PARTS + 1):
 
         # Build a list of combinations of knows parts with number of parts
         permutations = list(itertools.permutations(parts, number))
@@ -48,8 +48,11 @@ def main():
         for (i, permutation) in enumerate(permutations):
             if (not is_good_pass(permutation)):
                 continue
-            for char in JOIN_CHARS:
-                print char.join(permutation)
+            if len(permutation) > 1:
+                for char in JOIN_CHARS:
+                    print char.join(permutation)
+            else:
+                print ''.join(permutation)
 
 if __name__ == '__main__':
     main()
