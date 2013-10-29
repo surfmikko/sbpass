@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # SETTINGS
-MAX_THREADS = 10
+MAX_THREADS = 20
 
 import subprocess
 import tempfile
@@ -38,6 +38,20 @@ class MyThread(threading.Thread):
             print proc.returncode, stdout, stderr
             SYSTEM_ERROR=True
 
+def write_process_status(password):
+    statusfile = open('status', 'w')
+    statusfile.write(password)
+    statusfile.close()
+
+def read_process_status():
+    try:
+        statusfile = open('status')
+        first_password = statusfile.read()
+        statusfile.close()
+        return first_password
+    except:
+        return None
+
 def main():
     wordlist = sys.argv[1]
     sparsebundle = sys.argv[2]
@@ -46,8 +60,17 @@ def main():
     start_time = 0
     total_lines = sum(1 for line in open(wordlist))
 
+    first_password = read_process_status()
+
     f = open(wordlist)
     for password in f:
+
+        count = count + 1
+        if first_password != None:
+            if password == first_password:
+                first_password = None
+            else:
+                continue
 
         if PASSWORD_FOUND:
             exit(0)
@@ -55,14 +78,17 @@ def main():
         if SYSTEM_ERROR:
             exit(1)
 
-        count = count + 1
         if count % 50 == 1:
+
+            write_process_status(password)
+
             stop_time = time.time()
             passes_per_second = 50.0 / (stop_time - start_time)
             start_time = stop_time
+
             print "Trying (%i/%i %0.2f/sec): '%s'" % (count, total_lines,
                     passes_per_second, password.strip())
-            
+
         thread = MyThread(password.strip(), sparsebundle)
         thread.start()
 
